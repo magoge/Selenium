@@ -4,10 +4,14 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Browser;
 
 public class HomePage {
+    @FindBy(id = "input-firstname")
+    private static WebElement firstNameWebElement;
+
     static {
         PageFactory.initElements(Browser.driver, HomePage.class);
     }
@@ -26,10 +30,13 @@ public class HomePage {
         register.click();
     }
 
-    public static void populateData() {
-        WebElement firstName = Browser.driver.findElement(By.id("input-firstname"));
-        String randomFirstName = RandomStringUtils.randomAlphabetic(8);
-        firstName.sendKeys(randomFirstName);
+    public static void populateData(String firstName) {
+
+        writeInTheFirstNameField(firstName);
+
+//        WebElement firstName = Browser.driver.findElement(By.id("input-firstname"));
+//        String randomFirstName = RandomStringUtils.randomAlphabetic(8);
+//        firstName.sendKeys(randomFirstName);
 
         WebElement lastName = Browser.driver.findElement(By.id("input-lastname"));
         String randomLastName = RandomStringUtils.randomAlphabetic(10);
@@ -51,6 +58,10 @@ public class HomePage {
 
         WebElement agreeCheckBox = Browser.driver.findElement(By.name("agree"));
         agreeCheckBox.click();
+    }
+
+    private static void writeInTheFirstNameField(String firstName) {
+       firstNameWebElement.sendKeys(firstName);
     }
 
     public static void continueButton() {
